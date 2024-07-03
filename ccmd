@@ -1,0 +1,2 @@
+go list -export -f '{{if .Export}}packagefile {{.ImportPath}}={{.Export}}{{end}}' std `go list -f {{.Imports}} ./goloader/goloader.go | awk '{sub(/^\[/, ""); print }' | awk '{sub(/\]$/, ""); print }'` > importcfg
+CGO_ENABLED=0 go tool compile -importcfg importcfg -o ./goloader.o ./goloader/goloader.go
